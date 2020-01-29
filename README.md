@@ -35,6 +35,7 @@ It is **crucial** that you use a consistent set of versions for the CMSIS Core -
 HAL Driver G4 | CMSIS Device G4 | CMSIS Core | Was delivered in the full MCU package
 ------------- | --------------- | ---------- | -------------------------------------
 Tag v1.0.0 | Tag v1.0.0 | Tag v5.4.0_cm4 | Tag v1.0.0 (and following, if any, till next new tag)
+Tag v1.1.0 | Tag v1.1.0 | Tag v5.4.0_cm4 | Tag v1.1.0 (and following, if any, till next new tag)
 
 The full **STM32CubeG4** MCU package is available [here](https://github.com/STMicroelectronics/STM32CubeG4).
 
