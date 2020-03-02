@@ -36,6 +36,9 @@ HAL Driver G4 | CMSIS Device G4 | CMSIS Core | Was delivered in the full MCU pac
 ------------- | --------------- | ---------- | -------------------------------------
 Tag v1.0.0 | Tag v1.0.0 | Tag v5.4.0_cm4 | Tag v1.0.0 (and following, if any, till next new tag)
 Tag v1.1.0 | Tag v1.1.0 | Tag v5.4.0_cm4 | Tag v1.1.0 (and following, if any, till next new tag)
+Tag v1.1.1 | Tag v1.1.1 | Tag v5.4.0_cm4 | Tag v1.2.0 (and following, if any, till next new tag)
+
+Details about the content of this release are available in the release note [here](https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32g4xx_hal_driver/blob/master/Release_Notes.html). 
 
 The full **STM32CubeG4** MCU package is available [here](https://github.com/STMicroelectronics/STM32CubeG4).
 
