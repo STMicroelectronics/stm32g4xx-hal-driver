@@ -2885,6 +2885,8 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   uint32_t ErrorStatusITs;
   uint32_t TransmittedBuffers;
   uint32_t AbortedBuffers;
+  uint32_t itsource;
+  uint32_t itflag;
 
   TxEventFifoITs = hfdcan->Instance->IR & FDCAN_TX_EVENT_FIFO_MASK;
   TxEventFifoITs &= hfdcan->Instance->IE;
@@ -2896,11 +2898,13 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   Errors &= hfdcan->Instance->IE;
   ErrorStatusITs = hfdcan->Instance->IR & FDCAN_ERROR_STATUS_MASK;
   ErrorStatusITs &= hfdcan->Instance->IE;
+  itsource = hfdcan->Instance->IE;
+  itflag = hfdcan->Instance->IR;
 
   /* High Priority Message interrupt management *******************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_RX_HIGH_PRIORITY_MSG) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_RX_HIGH_PRIORITY_MSG) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_RX_HIGH_PRIORITY_MSG) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_RX_HIGH_PRIORITY_MSG) != RESET)
     {
       /* Clear the High Priority Message flag */
       __HAL_FDCAN_CLEAR_FLAG(hfdcan, FDCAN_FLAG_RX_HIGH_PRIORITY_MSG);
@@ -2916,9 +2920,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Transmission Abort interrupt management **********************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_TX_ABORT_COMPLETE) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_TX_ABORT_COMPLETE) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_TX_ABORT_COMPLETE) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_TX_ABORT_COMPLETE) != RESET)
     {
       /* List of aborted monitored buffers */
       AbortedBuffers = hfdcan->Instance->TXBCF;
@@ -2983,9 +2987,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Tx FIFO empty interrupt management ***************************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_TX_FIFO_EMPTY) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_TX_FIFO_EMPTY) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_TX_FIFO_EMPTY) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_TX_FIFO_EMPTY) != RESET)
     {
       /* Clear the Tx FIFO empty flag */
       __HAL_FDCAN_CLEAR_FLAG(hfdcan, FDCAN_FLAG_TX_FIFO_EMPTY);
@@ -3001,9 +3005,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Transmission Complete interrupt management *******************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_TX_COMPLETE) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_TX_COMPLETE) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_TX_COMPLETE) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_TX_COMPLETE) != RESET)
     {
       /* List of transmitted monitored buffers */
       TransmittedBuffers = hfdcan->Instance->TXBTO;
@@ -3023,9 +3027,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Timestamp Wraparound interrupt management ********************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_TIMESTAMP_WRAPAROUND) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_TIMESTAMP_WRAPAROUND) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_TIMESTAMP_WRAPAROUND) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_TIMESTAMP_WRAPAROUND) != RESET)
     {
       /* Clear the Timestamp Wraparound flag */
       __HAL_FDCAN_CLEAR_FLAG(hfdcan, FDCAN_FLAG_TIMESTAMP_WRAPAROUND);
@@ -3041,9 +3045,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Timeout Occurred interrupt management ************************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_TIMEOUT_OCCURRED) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_TIMEOUT_OCCURRED) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_TIMEOUT_OCCURRED) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_TIMEOUT_OCCURRED) != RESET)
     {
       /* Clear the Timeout Occurred flag */
       __HAL_FDCAN_CLEAR_FLAG(hfdcan, FDCAN_FLAG_TIMEOUT_OCCURRED);
@@ -3059,9 +3063,9 @@ void HAL_FDCAN_IRQHandler(FDCAN_HandleTypeDef *hfdcan)
   }
 
   /* Message RAM access failure interrupt management **************************/
-  if (__HAL_FDCAN_GET_FLAG(hfdcan, FDCAN_FLAG_RAM_ACCESS_FAILURE) != 0U)
+  if (FDCAN_CHECK_FLAG(itflag, FDCAN_FLAG_RAM_ACCESS_FAILURE) != RESET)
   {
-    if (__HAL_FDCAN_GET_IT_SOURCE(hfdcan, FDCAN_IT_RAM_ACCESS_FAILURE) != 0U)
+    if (FDCAN_CHECK_IT_SOURCE(itsource, FDCAN_IT_RAM_ACCESS_FAILURE) != RESET)
     {
       /* Clear the Message RAM access failure flag */
       __HAL_FDCAN_CLEAR_FLAG(hfdcan, FDCAN_FLAG_RAM_ACCESS_FAILURE);

@@ -1406,6 +1406,10 @@ HAL_FDCAN_StateTypeDef HAL_FDCAN_GetState(FDCAN_HandleTypeDef *hfdcan);
                                      ((OPERATION) == FDCAN_TIMEOUT_TX_EVENT_FIFO) || \
                                      ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO0     ) || \
                                      ((OPERATION) == FDCAN_TIMEOUT_RX_FIFO1     ))
+
+#define FDCAN_CHECK_IT_SOURCE(__IE__, __IT__)  ((((__IE__) & (__IT__)) == (__IT__)) ? SET : RESET)
+
+#define FDCAN_CHECK_FLAG(__IR__, __FLAG__) ((((__IR__) & (__FLAG__)) == (__FLAG__)) ? SET : RESET)
 /**
   * @}
   */
