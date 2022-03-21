@@ -230,12 +230,15 @@ typedef struct
   uint32_t FilterIndex;           /*!< Specifies the index of matching Rx acceptance filter element.
                                        This parameter must be a number between:
                                         - 0 and (SRAMCAN_FLS_NBR-1), if IdType is FDCAN_STANDARD_ID
-                                        - 0 and (SRAMCAN_FLE_NBR-1), if IdType is FDCAN_EXTENDED_ID */
+                                        - 0 and (SRAMCAN_FLE_NBR-1), if IdType is FDCAN_EXTENDED_ID
+                                       When the frame is a Non-Filter matching frame, this parameter
+                                       is unused.                                                        */
 
   uint32_t IsFilterMatchingFrame; /*!< Specifies whether the accepted frame did not match any Rx filter.
-                                         Acceptance of non-matching frames may be enabled via
-                                         HAL_FDCAN_ConfigGlobalFilter().
-                                         This parameter can be 0 or 1                                    */
+                                       Acceptance of non-matching frames may be enabled via
+                                       HAL_FDCAN_ConfigGlobalFilter().
+                                       This parameter takes 0 if the frame matched an Rx filter or
+                                       1 if it did not match any Rx filter                               */
 
 } FDCAN_RxHeaderTypeDef;
 
