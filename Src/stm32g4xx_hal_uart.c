@@ -2958,7 +2958,7 @@ HAL_StatusTypeDef HAL_LIN_SendBreak(UART_HandleTypeDef *huart)
   *               the configuration information for the specified UART.
   * @retval HAL state
   */
-HAL_UART_StateTypeDef HAL_UART_GetState(UART_HandleTypeDef *huart)
+HAL_UART_StateTypeDef HAL_UART_GetState(const UART_HandleTypeDef *huart)
 {
   uint32_t temp1;
   uint32_t temp2;
@@ -2974,7 +2974,7 @@ HAL_UART_StateTypeDef HAL_UART_GetState(UART_HandleTypeDef *huart)
   *               the configuration information for the specified UART.
   * @retval UART Error Code
   */
-uint32_t HAL_UART_GetError(UART_HandleTypeDef *huart)
+uint32_t HAL_UART_GetError(const UART_HandleTypeDef *huart)
 {
   return huart->ErrorCode;
 }
