@@ -711,6 +711,8 @@ __weak void HAL_I2C_MspDeInit(I2C_HandleTypeDef *hi2c)
 /**
   * @brief  Register a User I2C Callback
   *         To be used instead of the weak predefined callback
+  * @note   The HAL_I2C_RegisterCallback() may be called before HAL_I2C_Init() in HAL_I2C_STATE_RESET
+  *         to register callbacks for HAL_I2C_MSPINIT_CB_ID and HAL_I2C_MSPDEINIT_CB_ID.
   * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
   *                the configuration information for the specified I2C.
   * @param  CallbackID ID of the callback to be registered
@@ -741,8 +743,6 @@ HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_Call
 
     return HAL_ERROR;
   }
-  /* Process locked */
-  __HAL_LOCK(hi2c);
 
   if (HAL_I2C_STATE_READY == hi2c->State)
   {
@@ -831,14 +831,14 @@ HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_Call
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(hi2c);
   return status;
 }
 
 /**
   * @brief  Unregister an I2C Callback
   *         I2C callback is redirected to the weak predefined callback
+  * @note   The HAL_I2C_UnRegisterCallback() may be called before HAL_I2C_Init() in HAL_I2C_STATE_RESET 
+  *         to un-register callbacks for HAL_I2C_MSPINIT_CB_ID and HAL_I2C_MSPDEINIT_CB_ID.
   * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
   *                the configuration information for the specified I2C.
   * @param  CallbackID ID of the callback to be unregistered
@@ -860,9 +860,6 @@ HAL_StatusTypeDef HAL_I2C_RegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_Call
 HAL_StatusTypeDef HAL_I2C_UnRegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_CallbackIDTypeDef CallbackID)
 {
   HAL_StatusTypeDef status = HAL_OK;
-
-  /* Process locked */
-  __HAL_LOCK(hi2c);
 
   if (HAL_I2C_STATE_READY == hi2c->State)
   {
@@ -951,8 +948,6 @@ HAL_StatusTypeDef HAL_I2C_UnRegisterCallback(I2C_HandleTypeDef *hi2c, HAL_I2C_Ca
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(hi2c);
   return status;
 }
 
@@ -975,8 +970,6 @@ HAL_StatusTypeDef HAL_I2C_RegisterAddrCallback(I2C_HandleTypeDef *hi2c, pI2C_Add
 
     return HAL_ERROR;
   }
-  /* Process locked */
-  __HAL_LOCK(hi2c);
 
   if (HAL_I2C_STATE_READY == hi2c->State)
   {
@@ -991,8 +984,6 @@ HAL_StatusTypeDef HAL_I2C_RegisterAddrCallback(I2C_HandleTypeDef *hi2c, pI2C_Add
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(hi2c);
   return status;
 }
 
@@ -1007,9 +998,6 @@ HAL_StatusTypeDef HAL_I2C_UnRegisterAddrCallback(I2C_HandleTypeDef *hi2c)
 {
   HAL_StatusTypeDef status = HAL_OK;
 
-  /* Process locked */
-  __HAL_LOCK(hi2c);
-
   if (HAL_I2C_STATE_READY == hi2c->State)
   {
     hi2c->AddrCallback = HAL_I2C_AddrCallback; /* Legacy weak AddrCallback  */
@@ -1023,8 +1011,6 @@ HAL_StatusTypeDef HAL_I2C_UnRegisterAddrCallback(I2C_HandleTypeDef *hi2c)
     status =  HAL_ERROR;
   }
 
-  /* Release Lock */
-  __HAL_UNLOCK(hi2c);
   return status;
 }
 
