@@ -6847,24 +6847,21 @@ static HAL_StatusTypeDef I2C_IsErrorOccurred(I2C_HandleTypeDef *hi2c, uint32_t T
           {
             /* Generate Stop */
             hi2c->Instance->CR2 |= I2C_CR2_STOP;
-            
+
             /* Update Tick with new reference */
             tickstart = HAL_GetTick();
           }
-          
+
           while (__HAL_I2C_GET_FLAG(hi2c, I2C_FLAG_STOPF) == RESET)
           {
             /* Check for the Timeout */
             if ((HAL_GetTick() - tickstart) > I2C_TIMEOUT_STOPF)
             {
-              hi2c->ErrorCode |= HAL_I2C_ERROR_TIMEOUT;
-              hi2c->State = HAL_I2C_STATE_READY;
-              hi2c->Mode = HAL_I2C_MODE_NONE;
-              
-              /* Process Unlocked */
-              __HAL_UNLOCK(hi2c);
-              
+              error_code |=HAL_I2C_ERROR_TIMEOUT;
+
               status = HAL_ERROR;
+
+              break;
             }
           }
         }
@@ -6968,14 +6965,14 @@ static void I2C_TransferConfig(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uin
 
   /* Declaration of tmp to prevent undefined behavior of volatile usage */
   uint32_t tmp = ((uint32_t)(((uint32_t)DevAddress & I2C_CR2_SADD) | \
-                            (((uint32_t)Size << I2C_CR2_NBYTES_Pos) & I2C_CR2_NBYTES) | \
-                              (uint32_t)Mode | (uint32_t)Request) & (~0x80000000U));
+                             (((uint32_t)Size << I2C_CR2_NBYTES_Pos) & I2C_CR2_NBYTES) | \
+                             (uint32_t)Mode | (uint32_t)Request) & (~0x80000000U));
 
   /* update CR2 register */
   MODIFY_REG(hi2c->Instance->CR2, \
              ((I2C_CR2_SADD | I2C_CR2_NBYTES | I2C_CR2_RELOAD | I2C_CR2_AUTOEND | \
                (I2C_CR2_RD_WRN & (uint32_t)(Request >> (31U - I2C_CR2_RD_WRN_Pos))) | \
-                I2C_CR2_START | I2C_CR2_STOP)), tmp);
+               I2C_CR2_START | I2C_CR2_STOP)), tmp);
 }
 
 /**
