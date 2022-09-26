@@ -46,7 +46,7 @@
 
 /* Defines used for PLL range */
 #define UTILS_PLLVCO_INPUT_MIN        2660000U       /*!< Frequency min for PLLVCO input, in Hz   */
-#define UTILS_PLLVCO_INPUT_MAX        8000000U       /*!< Frequency max for PLLVCO input, in Hz   */
+#define UTILS_PLLVCO_INPUT_MAX       16000000U       /*!< Frequency max for PLLVCO input, in Hz   */
 #define UTILS_PLLVCO_OUTPUT_MIN      64000000U       /*!< Frequency min for PLLVCO output, in Hz  */
 #define UTILS_PLLVCO_OUTPUT_MAX     344000000U       /*!< Frequency max for PLLVCO output, in Hz  */
 
