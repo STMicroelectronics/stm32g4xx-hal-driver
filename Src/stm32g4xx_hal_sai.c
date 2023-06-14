@@ -366,7 +366,6 @@ HAL_StatusTypeDef HAL_SAI_InitProtocol(SAI_HandleTypeDef *hsai, uint32_t protoco
   */
 HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
 {
-  uint32_t tmpregisterGCR;
   uint32_t ckstr_bits;
   uint32_t syncen_bits;
 
@@ -460,22 +459,6 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
 
   /* SAI Block Synchro Configuration -----------------------------------------*/
   /* This setting must be done with both audio block (A & B) disabled         */
-  switch (hsai->Init.SynchroExt)
-  {
-    case SAI_SYNCEXT_DISABLE :
-      tmpregisterGCR = 0;
-      break;
-    case SAI_SYNCEXT_OUTBLOCKA_ENABLE :
-      tmpregisterGCR = SAI_GCR_SYNCOUT_0;
-      break;
-    case SAI_SYNCEXT_OUTBLOCKB_ENABLE :
-      tmpregisterGCR = SAI_GCR_SYNCOUT_1;
-      break;
-    default :
-      tmpregisterGCR = 0;
-      break;
-  }
-
   switch (hsai->Init.Synchro)
   {
     case SAI_ASYNCHRONOUS :
@@ -484,21 +467,9 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
     case SAI_SYNCHRONOUS :
       syncen_bits = SAI_xCR1_SYNCEN_0;
       break;
-    case SAI_SYNCHRONOUS_EXT_SAI1 :
-      syncen_bits = SAI_xCR1_SYNCEN_1;
-      break;
-    case SAI_SYNCHRONOUS_EXT_SAI2 :
-      syncen_bits = SAI_xCR1_SYNCEN_1;
-      tmpregisterGCR |= SAI_GCR_SYNCIN_0;
-      break;
     default :
       syncen_bits = 0;
       break;
-  }
-
-  if ((hsai->Instance == SAI1_Block_A) || (hsai->Instance == SAI1_Block_B))
-  {
-    SAI1->GCR = tmpregisterGCR;
   }
 
   if (hsai->Init.AudioFrequency != SAI_AUDIO_FREQUENCY_MCKDIV)
