@@ -817,7 +817,7 @@ uint32_t HAL_SAI_GetError(const SAI_HandleTypeDef *hsai);
 /** @defgroup SAI_Private_Macros SAI Private Macros
   * @{
   */
-#define IS_SAI_BLOCK_SYNCEXT(STATE) (((STATE) == SAI_SYNCEXT_DISABLE))
+#define IS_SAI_BLOCK_SYNCEXT(STATE) ((STATE) == SAI_SYNCEXT_DISABLE)
 
 #define IS_SAI_SUPPORTED_PROTOCOL(PROTOCOL)   (((PROTOCOL) == SAI_I2S_STANDARD)     ||\
                                                ((PROTOCOL) == SAI_I2S_MSBJUSTIFIED) ||\

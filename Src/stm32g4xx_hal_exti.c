@@ -65,7 +65,7 @@
         (++) Provide exiting handle as parameter.
         (++) Provide pointer on EXTI_ConfigTypeDef structure as second parameter.
 
-    (#) Clear Exti configuration of a dedicated line using HAL_EXTI_GetConfigLine().
+    (#) Clear Exti configuration of a dedicated line using HAL_EXTI_ClearConfigLine().
         (++) Provide exiting handle as parameter.
 
     (#) Register callback to treat Exti interrupts using HAL_EXTI_RegisterCallback().

@@ -273,6 +273,8 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
   uint32_t timeout;
   uint32_t getlatency;
   ErrorStatus status = SUCCESS;
+  uint32_t regulatorstatus = LL_PWR_GetRegulVoltageScaling();
+  uint32_t regulatorbooststatus = LL_PWR_IsEnabledRange1BoostMode();
 
   uint32_t latency = LL_FLASH_LATENCY_0;  /* default value 0WS */
 
@@ -283,7 +285,7 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
   }
   else
   {
-    if((LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE1) && LL_PWR_IsEnabledRange1BoostMode())
+    if((regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1) && (regulatorbooststatus == 1U))
     {
       if(HCLKFrequency > UTILS_SCALE1_LATENCY4_BOOST_FREQ)
       {
@@ -311,7 +313,7 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
       }
     }
     /* SCALE1 normal mode*/
-    else if(LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE1)
+    else if(regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE1)
     {
       if(HCLKFrequency > UTILS_SCALE1_LATENCY4_FREQ)
       {
@@ -339,7 +341,7 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
       }
     }
     /* SCALE2 */
-    else if(LL_PWR_GetRegulVoltageScaling() == LL_PWR_REGU_VOLTAGE_SCALE2) 
+    else if(regulatorstatus == LL_PWR_REGU_VOLTAGE_SCALE2)
     {
       if(HCLKFrequency > UTILS_SCALE2_LATENCY2_FREQ)
       {
@@ -355,6 +357,10 @@ ErrorStatus LL_SetFlashLatency(uint32_t HCLKFrequency)
         }
         /* else HCLKFrequency <= 8MHz default LL_FLASH_LATENCY_0 0WS */
       }
+    }
+    else
+    {
+     /* Nothing to do */
     }
 
     if (status != ERROR)

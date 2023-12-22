@@ -31,7 +31,7 @@
   * @{
   */
 
-#if defined (USART1) || defined (USART2) || defined (USART3) || defined (UART4) || defined (UART5)
+#if defined(USART1) || defined(USART2) || defined(USART3) || defined(UART4) || defined(UART5)
 
 /** @addtogroup USART_LL
   * @{
@@ -40,6 +40,17 @@
 /* Private types -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* Private constants ---------------------------------------------------------*/
+/** @addtogroup USART_LL_Private_Constants
+  * @{
+  */
+
+/* Definition of default baudrate value used for USART initialisation */
+#define USART_DEFAULT_BAUDRATE          (9600U)
+
+/**
+  * @}
+  */
+
 /* Private macros ------------------------------------------------------------*/
 /** @addtogroup USART_LL_Private_Macros
   * @{
@@ -318,7 +329,7 @@ void LL_USART_StructInit(LL_USART_InitTypeDef *USART_InitStruct)
 {
   /* Set USART_InitStruct fields to default values */
   USART_InitStruct->PrescalerValue      = LL_USART_PRESCALER_DIV1;
-  USART_InitStruct->BaudRate            = 9600U;
+  USART_InitStruct->BaudRate            = USART_DEFAULT_BAUDRATE;
   USART_InitStruct->DataWidth           = LL_USART_DATAWIDTH_8B;
   USART_InitStruct->StopBits            = LL_USART_STOPBITS_1;
   USART_InitStruct->Parity              = LL_USART_PARITY_NONE ;

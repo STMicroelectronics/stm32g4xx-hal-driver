@@ -318,53 +318,55 @@ typedef struct
 typedef struct
 {
   uint32_t LastErrorCode;     /*!< Specifies the type of the last error that occurred on the FDCAN bus.
-                                   This parameter can be a value of @ref FDCAN_protocol_error_code */
+                                   This parameter can be a value of @ref FDCAN_protocol_error_code             */
 
   uint32_t DataLastErrorCode; /*!< Specifies the type of the last error that occurred in the data phase
                                    of a CAN FD format frame with its BRS flag set.
-                                   This parameter can be a value of @ref FDCAN_protocol_error_code */
+                                   This parameter can be a value of @ref FDCAN_protocol_error_code             */
 
   uint32_t Activity;          /*!< Specifies the FDCAN module communication state.
-                                   This parameter can be a value of @ref FDCAN_communication_state */
+                                   This parameter can be a value of @ref FDCAN_communication_state             */
 
   uint32_t ErrorPassive;      /*!< Specifies the FDCAN module error status.
                                    This parameter can be:
                                     - 0 : The FDCAN is in Error_Active state
-                                    - 1 : The FDCAN is in Error_Passive state */
+                                    - 1 : The FDCAN is in Error_Passive state                                  */
 
   uint32_t Warning;           /*!< Specifies the FDCAN module warning status.
                                    This parameter can be:
-                                    - 0 : error counters (RxErrorCnt and TxErrorCnt)
-                                          are below the Error_Warning limit of 96
-                                    - 1 : at least one of error counters has reached the Error_Warning limit of 96 */
+                                    - 0 : error counters (RxErrorCnt and TxErrorCnt) are below the
+                                          Error_Warning limit of 96
+                                    - 1 : at least one of error counters has reached the Error_Warning
+                                          limit of 96                                                          */
 
   uint32_t BusOff;            /*!< Specifies the FDCAN module Bus_Off status.
                                    This parameter can be:
                                     - 0 : The FDCAN is not in Bus_Off state
-                                    - 1 : The FDCAN is in Bus_Off state */
+                                    - 1 : The FDCAN is in Bus_Off state                                        */
 
   uint32_t RxESIflag;         /*!< Specifies ESI flag of last received CAN FD message.
                                    This parameter can be:
                                     - 0 : Last received CAN FD message did not have its ESI flag set
-                                    - 1 : Last received CAN FD message had its ESI flag set */
+                                    - 1 : Last received CAN FD message had its ESI flag set                    */
 
   uint32_t RxBRSflag;         /*!< Specifies BRS flag of last received CAN FD message.
                                    This parameter can be:
                                     - 0 : Last received CAN FD message did not have its BRS flag set
-                                    - 1 : Last received CAN FD message had its BRS flag set */
+                                    - 1 : Last received CAN FD message had its BRS flag set                    */
 
   uint32_t RxFDFflag;         /*!< Specifies if CAN FD message (FDF flag set) has been received
-                                   since last protocol status.This parameter can be:
+                                   since last protocol status.
+                                   This parameter can be:
                                     - 0 : No CAN FD message received
-                                    - 1 : CAN FD message received */
+                                    - 1 : CAN FD message received                                              */
 
   uint32_t ProtocolException; /*!< Specifies the FDCAN module Protocol Exception status.
                                    This parameter can be:
                                     - 0 : No protocol exception event occurred since last read access
-                                    - 1 : Protocol exception event occurred */
+                                    - 1 : Protocol exception event occurred                                    */
 
   uint32_t TDCvalue;          /*!< Specifies the Transmitter Delay Compensation Value.
-                                   This parameter can be a number between 0 and 127 */
+                                   This parameter can be a number between 0 and 127                            */
 
 } FDCAN_ProtocolStatusTypeDef;
 
@@ -374,22 +376,24 @@ typedef struct
 typedef struct
 {
   uint32_t TxErrorCnt;     /*!< Specifies the Transmit Error Counter Value.
-                                This parameter can be a number between 0 and 255 */
+                                This parameter can be a number between 0 and 255                               */
 
   uint32_t RxErrorCnt;     /*!< Specifies the Receive Error Counter Value.
-                                This parameter can be a number between 0 and 127 */
+                                This parameter can be a number between 0 and 127                               */
 
   uint32_t RxErrorPassive; /*!< Specifies the Receive Error Passive status.
                                 This parameter can be:
-                                 - 0 : The Receive Error Counter (RxErrorCnt) is below the error passive level of 128
-                                 - 1 : The Receive Error Counter (RxErrorCnt)
-                                       has reached the error passive level of 128 */
+                                 - 0 : The Receive Error Counter (RxErrorCnt) is below the error
+                                       passive level of 128
+                                 - 1 : The Receive Error Counter (RxErrorCnt) has reached the error
+                                       passive level of 128                                                    */
 
   uint32_t ErrorLogging;   /*!< Specifies the Transmit/Receive error logging counter value.
                                 This parameter can be a number between 0 and 255.
-                                This counter is incremented each time when a FDCAN protocol error causes the TxErrorCnt
-                                or the RxErrorCnt to be incremented. The counter stops at 255; the next increment of
-                                TxErrorCnt or RxErrorCnt sets interrupt flag FDCAN_FLAG_ERROR_LOGGING_OVERFLOW */
+                                This counter is incremented each time when a FDCAN protocol error causes
+                                the TxErrorCnt or the RxErrorCnt to be incremented. The counter stops at 255;
+                                the next increment of TxErrorCnt or RxErrorCnt sets interrupt flag
+                                FDCAN_FLAG_ERROR_LOGGING_OVERFLOW                                              */
 
 } FDCAN_ErrorCountersTypeDef;
 
@@ -604,21 +608,21 @@ typedef  void (*pFDCAN_ErrorStatusCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, 
   * @{
   */
 #define FDCAN_DLC_BYTES_0  ((uint32_t)0x00000000U) /*!< 0 bytes data field  */
-#define FDCAN_DLC_BYTES_1  ((uint32_t)0x00010000U) /*!< 1 bytes data field  */
-#define FDCAN_DLC_BYTES_2  ((uint32_t)0x00020000U) /*!< 2 bytes data field  */
-#define FDCAN_DLC_BYTES_3  ((uint32_t)0x00030000U) /*!< 3 bytes data field  */
-#define FDCAN_DLC_BYTES_4  ((uint32_t)0x00040000U) /*!< 4 bytes data field  */
-#define FDCAN_DLC_BYTES_5  ((uint32_t)0x00050000U) /*!< 5 bytes data field  */
-#define FDCAN_DLC_BYTES_6  ((uint32_t)0x00060000U) /*!< 6 bytes data field  */
-#define FDCAN_DLC_BYTES_7  ((uint32_t)0x00070000U) /*!< 7 bytes data field  */
-#define FDCAN_DLC_BYTES_8  ((uint32_t)0x00080000U) /*!< 8 bytes data field  */
-#define FDCAN_DLC_BYTES_12 ((uint32_t)0x00090000U) /*!< 12 bytes data field */
-#define FDCAN_DLC_BYTES_16 ((uint32_t)0x000A0000U) /*!< 16 bytes data field */
-#define FDCAN_DLC_BYTES_20 ((uint32_t)0x000B0000U) /*!< 20 bytes data field */
-#define FDCAN_DLC_BYTES_24 ((uint32_t)0x000C0000U) /*!< 24 bytes data field */
-#define FDCAN_DLC_BYTES_32 ((uint32_t)0x000D0000U) /*!< 32 bytes data field */
-#define FDCAN_DLC_BYTES_48 ((uint32_t)0x000E0000U) /*!< 48 bytes data field */
-#define FDCAN_DLC_BYTES_64 ((uint32_t)0x000F0000U) /*!< 64 bytes data field */
+#define FDCAN_DLC_BYTES_1  ((uint32_t)0x00000001U) /*!< 1 bytes data field  */
+#define FDCAN_DLC_BYTES_2  ((uint32_t)0x00000002U) /*!< 2 bytes data field  */
+#define FDCAN_DLC_BYTES_3  ((uint32_t)0x00000003U) /*!< 3 bytes data field  */
+#define FDCAN_DLC_BYTES_4  ((uint32_t)0x00000004U) /*!< 4 bytes data field  */
+#define FDCAN_DLC_BYTES_5  ((uint32_t)0x00000005U) /*!< 5 bytes data field  */
+#define FDCAN_DLC_BYTES_6  ((uint32_t)0x00000006U) /*!< 6 bytes data field  */
+#define FDCAN_DLC_BYTES_7  ((uint32_t)0x00000007U) /*!< 7 bytes data field  */
+#define FDCAN_DLC_BYTES_8  ((uint32_t)0x00000008U) /*!< 8 bytes data field  */
+#define FDCAN_DLC_BYTES_12 ((uint32_t)0x00000009U) /*!< 12 bytes data field */
+#define FDCAN_DLC_BYTES_16 ((uint32_t)0x0000000AU) /*!< 16 bytes data field */
+#define FDCAN_DLC_BYTES_20 ((uint32_t)0x0000000BU) /*!< 20 bytes data field */
+#define FDCAN_DLC_BYTES_24 ((uint32_t)0x0000000CU) /*!< 24 bytes data field */
+#define FDCAN_DLC_BYTES_32 ((uint32_t)0x0000000DU) /*!< 32 bytes data field */
+#define FDCAN_DLC_BYTES_48 ((uint32_t)0x0000000EU) /*!< 48 bytes data field */
+#define FDCAN_DLC_BYTES_64 ((uint32_t)0x0000000FU) /*!< 64 bytes data field */
 /**
   * @}
   */
@@ -1040,7 +1044,7 @@ typedef  void (*pFDCAN_ErrorStatusCallbackTypeDef)(FDCAN_HandleTypeDef *hfdcan, 
   * @retval None
   */
 #if USE_HAL_FDCAN_REGISTER_CALLBACKS == 1
-#define __HAL_FDCAN_RESET_HANDLE_STATE(__HANDLE__) do{                                                \
+#define __HAL_FDCAN_RESET_HANDLE_STATE(__HANDLE__) do{                                                 \
                                                        (__HANDLE__)->State = HAL_FDCAN_STATE_RESET;    \
                                                        (__HANDLE__)->MspInitCallback = NULL;           \
                                                        (__HANDLE__)->MspDeInitCallback = NULL;         \

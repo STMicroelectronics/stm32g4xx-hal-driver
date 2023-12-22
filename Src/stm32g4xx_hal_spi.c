@@ -1359,6 +1359,20 @@ HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxD
       hspi->Instance->DR = *((uint16_t *)hspi->pTxBuffPtr);
       hspi->pTxBuffPtr += sizeof(uint16_t);
       hspi->TxXferCount--;
+
+#if (USE_SPI_CRC != 0U)
+      /* Enable CRC Transmission */
+      if ((hspi->TxXferCount == 0U) && (hspi->Init.CRCCalculation == SPI_CRCCALCULATION_ENABLE))
+      {
+        /* Set NSS Soft to received correctly the CRC on slave mode with NSS pulse activated */
+        if ((READ_BIT(spi_cr1, SPI_CR1_MSTR) == 0U) && (READ_BIT(spi_cr2, SPI_CR2_NSSP) == SPI_CR2_NSSP))
+        {
+          SET_BIT(hspi->Instance->CR1, SPI_CR1_SSM);
+        }
+        SET_BIT(hspi->Instance->CR1, SPI_CR1_CRCNEXT);
+      }
+#endif /* USE_SPI_CRC */
+
     }
     while ((hspi->TxXferCount > 0U) || (hspi->RxXferCount > 0U))
     {
@@ -1418,6 +1432,19 @@ HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxD
         *(__IO uint8_t *)&hspi->Instance->DR = (*hspi->pTxBuffPtr);
         hspi->pTxBuffPtr++;
         hspi->TxXferCount--;
+
+#if (USE_SPI_CRC != 0U)
+        /* Enable CRC Transmission */
+        if ((hspi->TxXferCount == 0U) && (hspi->Init.CRCCalculation == SPI_CRCCALCULATION_ENABLE))
+        {
+          /* Set NSS Soft to received correctly the CRC on slave mode with NSS pulse activated */
+          if ((READ_BIT(spi_cr1, SPI_CR1_MSTR) == 0U) && (READ_BIT(spi_cr2, SPI_CR2_NSSP) == SPI_CR2_NSSP))
+          {
+            SET_BIT(hspi->Instance->CR1, SPI_CR1_SSM);
+          }
+          SET_BIT(hspi->Instance->CR1, SPI_CR1_CRCNEXT);
+        }
+#endif /* USE_SPI_CRC */
       }
     }
     while ((hspi->TxXferCount > 0U) || (hspi->RxXferCount > 0U))
