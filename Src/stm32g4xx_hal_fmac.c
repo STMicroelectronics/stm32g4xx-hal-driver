@@ -1229,11 +1229,11 @@ HAL_StatusTypeDef HAL_FMAC_FilterStop(FMAC_HandleTypeDef *hfmac)
     /* In case of DMA, abort DMA transfer */
     if (hfmac->InputAccess == FMAC_BUFFER_ACCESS_DMA)
     {
-      HAL_DMA_Abort(hfmac->hdmaIn);
+      HAL_DMA_Abort_IT(hfmac->hdmaIn);
     }
     if (hfmac->OutputAccess == FMAC_BUFFER_ACCESS_DMA)
     {
-      HAL_DMA_Abort(hfmac->hdmaOut);
+      HAL_DMA_Abort_IT(hfmac->hdmaOut);
     }
 
     /* Reset FMAC unit (internal pointers) */
