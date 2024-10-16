@@ -383,7 +383,7 @@ extern "C" {
 #define TEMPSENSOR_CAL1_TEMP               (30L)                        /* Temperature at which temperature sensor
                                            has been calibrated in production for data into TEMPSENSOR_CAL1_ADDR
                                            (tolerance: +-5 DegC) (unit: DegC). */
-#define TEMPSENSOR_CAL2_TEMP               (130L)                       /* Temperature at which temperature sensor
+#define TEMPSENSOR_CAL2_TEMP               (110L)                       /* Temperature at which temperature sensor
                                            has been calibrated in production for data into TEMPSENSOR_CAL2_ADDR
                                            (tolerance: +-5 DegC) (unit: DegC). */
 #define TEMPSENSOR_CAL_VREFANALOG          (3000UL)                     /* Analog voltage reference (Vref+) value
@@ -2873,7 +2873,7 @@ Refer to device datasheet for ADC5 & OPAMP5 availability */
       )                                                                        \
    )                                                                           \
   )
-#elif defined(STM32G414xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx)
+#elif defined(STM32G411xB) || defined(STM32G414xx) || defined(STM32GBK1CB) || defined(STM32G431xx) || defined(STM32G441xx)
 #define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
   ((((__ADC_INSTANCE__) == ADC1)                                               \
     &&(                                                                        \
@@ -2891,7 +2891,7 @@ Refer to device datasheet for ADC5 & OPAMP5 availability */
       )                                                                        \
    )                                                                           \
   )
-#elif defined(STM32G491xx) || defined(STM32G4A1xx)
+#elif defined(STM32G491xx) || defined(STM32G4A1xx) || defined(STM32G411xC)
 #define __LL_ADC_IS_CHANNEL_INTERNAL_AVAILABLE(__ADC_INSTANCE__, __CHANNEL__)  \
   ((((__ADC_INSTANCE__) == ADC1)                                               \
     &&(                                                                        \
