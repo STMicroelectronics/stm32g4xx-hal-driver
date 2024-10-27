@@ -378,7 +378,7 @@ extern "C" {
                                            temperature sensor ADC raw data acquired at temperature  30 DegC
                                            (tolerance: +-5 DegC), Vref+ = 3.0 V (tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL2_ADDR               ((uint16_t*) (0x1FFF75CAUL)) /* Address of parameter TS_CAL2: On STM32G4,
-                                           temperature sensor ADC raw data acquired at temperature 110 DegC
+                                           temperature sensor ADC raw data acquired at temperature 130 DegC
                                            (tolerance: +-5 DegC), Vref+ = 3.0 V (tolerance: +-10 mV). */
 #define TEMPSENSOR_CAL1_TEMP               (30L)                        /* Temperature at which temperature sensor
                                            has been calibrated in production for data into TEMPSENSOR_CAL1_ADDR
