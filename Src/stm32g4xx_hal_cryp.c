@@ -584,13 +584,13 @@ HAL_StatusTypeDef HAL_CRYP_SetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
   assert_param(IS_CRYP_DATATYPE(pConf->DataType));
   assert_param(IS_CRYP_ALGORITHM(pConf->Algorithm));
 
+  /* Process locked */
+  __HAL_LOCK(hcryp);
+
   if (hcryp->State == HAL_CRYP_STATE_READY)
   {
     /* Change the CRYP state */
     hcryp->State = HAL_CRYP_STATE_BUSY;
-
-    /* Process locked */
-    __HAL_LOCK(hcryp);
 
     /* Set  CRYP parameters  */
     hcryp->Init.DataType        = pConf->DataType;
@@ -612,9 +612,6 @@ HAL_StatusTypeDef HAL_CRYP_SetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
     /*clear error flags*/
     __HAL_CRYP_CLEAR_FLAG(hcryp, CRYP_ERR_CLEAR);
 
-    /* Process Unlocked */
-    __HAL_UNLOCK(hcryp);
-
     /* Reset Error Code field */
     hcryp->ErrorCode = HAL_CRYP_ERROR_NONE;
 
@@ -623,6 +620,9 @@ HAL_StatusTypeDef HAL_CRYP_SetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
 
     /* Set the default CRYP phase */
     hcryp->Phase = CRYP_PHASE_READY;
+
+    /* Process Unlocked */
+    __HAL_UNLOCK(hcryp);
 
     /* Return function status */
     return HAL_OK;
@@ -653,13 +653,13 @@ HAL_StatusTypeDef HAL_CRYP_GetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
     return HAL_ERROR;
   }
 
+  /* Process locked */
+  __HAL_LOCK(hcryp);
+
   if (hcryp->State == HAL_CRYP_STATE_READY)
   {
     /* Change the CRYP state */
     hcryp->State = HAL_CRYP_STATE_BUSY;
-
-    /* Process locked */
-    __HAL_LOCK(hcryp);
 
     /* Get  CRYP parameters  */
     pConf->DataType        = hcryp->Init.DataType;
@@ -674,11 +674,11 @@ HAL_StatusTypeDef HAL_CRYP_GetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
     pConf->HeaderWidthUnit = hcryp->Init.HeaderWidthUnit;
     pConf->KeyIVConfigSkip = hcryp->Init.KeyIVConfigSkip;
 
-    /* Process Unlocked */
-    __HAL_UNLOCK(hcryp);
-
     /* Change the CRYP state */
     hcryp->State = HAL_CRYP_STATE_READY;
+
+    /* Process Unlocked */
+    __HAL_UNLOCK(hcryp);
 
     /* Return function status */
     return HAL_OK;
