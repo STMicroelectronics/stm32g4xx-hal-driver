@@ -1768,7 +1768,7 @@ HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandT
   assert_param(IS_QSPI_INSTRUCTION_MODE(cmd->InstructionMode));
   if (cmd->InstructionMode != QSPI_INSTRUCTION_NONE)
   {
-  assert_param(IS_QSPI_INSTRUCTION(cmd->Instruction));
+    assert_param(IS_QSPI_INSTRUCTION(cmd->Instruction));
   }
 
   assert_param(IS_QSPI_ADDRESS_MODE(cmd->AddressMode));
@@ -1808,9 +1808,9 @@ HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandT
     if (status == HAL_OK)
     {
       /* Configure QSPI: CR register with timeout counter enable */
-    MODIFY_REG(hqspi->Instance->CR, QUADSPI_CR_TCEN, cfg->TimeOutActivation);
+      MODIFY_REG(hqspi->Instance->CR, QUADSPI_CR_TCEN, cfg->TimeOutActivation);
 
-    if (cfg->TimeOutActivation == QSPI_TIMEOUT_COUNTER_ENABLE)
+      if (cfg->TimeOutActivation == QSPI_TIMEOUT_COUNTER_ENABLE)
       {
         assert_param(IS_QSPI_TIMEOUT_PERIOD(cfg->TimeOutPeriod));
 
