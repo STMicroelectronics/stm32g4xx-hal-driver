@@ -1348,20 +1348,24 @@ HAL_StatusTypeDef HAL_QSPI_Transmit_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pDat
         hqspi->hdma->Init.Direction = DMA_MEMORY_TO_PERIPH;
         MODIFY_REG(hqspi->hdma->Instance->CCR, DMA_CCR_DIR, hqspi->hdma->Init.Direction);
 
+        /* Enable the QSPI transfer error Interrupt */
+        __HAL_QSPI_ENABLE_IT(hqspi, QSPI_IT_TE);
+
+        /* Enable the DMA transfer by setting the DMAEN bit in the QSPI CR register */
+        SET_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
+
+
         /* Enable the QSPI transmit DMA Channel */
         if (HAL_DMA_Start_IT(hqspi->hdma, (uint32_t)pData, (uint32_t)&hqspi->Instance->DR, hqspi->TxXferSize) == HAL_OK)
         {
           /* Process unlocked */
           __HAL_UNLOCK(hqspi);
-
-          /* Enable the QSPI transfer error Interrupt */
-          __HAL_QSPI_ENABLE_IT(hqspi, QSPI_IT_TE);
-
-          /* Enable the DMA transfer by setting the DMAEN bit in the QSPI CR register */
-          SET_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
         }
         else
         {
+          /* Disable the DMA transfer by clearing the DMAEN bit in the QSPI CR register */
+          CLEAR_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
+
           status = HAL_ERROR;
           hqspi->ErrorCode |= HAL_QSPI_ERROR_DMA;
           hqspi->State = HAL_QSPI_STATE_READY;
@@ -1499,17 +1503,20 @@ HAL_StatusTypeDef HAL_QSPI_Receive_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pData
           /* Start the transfer by re-writing the address in AR register */
           WRITE_REG(hqspi->Instance->AR, addr_reg);
 
+        /* Enable the QSPI transfer error Interrupt */
+        __HAL_QSPI_ENABLE_IT(hqspi, QSPI_IT_TE);
+
+        /* Enable the DMA transfer by setting the DMAEN bit in the QSPI CR register */
+        SET_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
+
           /* Process unlocked */
           __HAL_UNLOCK(hqspi);
-
-          /* Enable the QSPI transfer error Interrupt */
-          __HAL_QSPI_ENABLE_IT(hqspi, QSPI_IT_TE);
-
-          /* Enable the DMA transfer by setting the DMAEN bit in the QSPI CR register */
-          SET_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
         }
         else
         {
+          /* Disable the DMA transfer by clearing the DMAEN bit in the QSPI CR register */
+          CLEAR_BIT(hqspi->Instance->CR, QUADSPI_CR_DMAEN);
+
           status = HAL_ERROR;
           hqspi->ErrorCode |= HAL_QSPI_ERROR_DMA;
           hqspi->State = HAL_QSPI_STATE_READY;
