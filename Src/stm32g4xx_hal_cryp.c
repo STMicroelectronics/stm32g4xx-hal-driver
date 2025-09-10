@@ -629,9 +629,6 @@ HAL_StatusTypeDef HAL_CRYP_SetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
   }
   else
   {
-    /* Process Unlocked */
-    __HAL_UNLOCK(hcryp);
-
     /* Busy error code field */
     hcryp->ErrorCode |= HAL_CRYP_ERROR_BUSY;
     return HAL_ERROR;
@@ -685,9 +682,6 @@ HAL_StatusTypeDef HAL_CRYP_GetConfig(CRYP_HandleTypeDef *hcryp, CRYP_ConfigTypeD
   }
   else
   {
-    /* Process Unlocked */
-    __HAL_UNLOCK(hcryp);
-
     /* Busy error code field */
     hcryp->ErrorCode |= HAL_CRYP_ERROR_BUSY;
     return HAL_ERROR;
