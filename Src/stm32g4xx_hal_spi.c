@@ -3995,7 +3995,10 @@ static HAL_StatusTypeDef SPI_WaitFlagStateUntilTimeout(SPI_HandleTypeDef *hspi, 
       {
         tmp_timeout = 0U;
       }
-      count--;
+      else
+      {
+        count--;
+      }
     }
   }
 
