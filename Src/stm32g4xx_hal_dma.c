@@ -492,6 +492,12 @@ HAL_StatusTypeDef HAL_DMA_Abort(DMA_HandleTypeDef *hdma)
 {
   HAL_StatusTypeDef status = HAL_OK;
 
+  /* Check the DMA peripheral handle parameter */
+  if (hdma == NULL)
+  {
+    return HAL_ERROR;
+  }
+
   if(hdma->State != HAL_DMA_STATE_BUSY)
   {
     /* no transfer ongoing */
