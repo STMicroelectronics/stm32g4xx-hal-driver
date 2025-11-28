@@ -944,7 +944,6 @@ HAL_StatusTypeDef HAL_DMA_UnRegisterCallback(DMA_HandleTypeDef *hdma, HAL_DMA_Ca
   */
 
 
-
 /** @defgroup DMA_Exported_Functions_Group3 Peripheral State and Errors functions
   *  @brief    Peripheral State and Errors functions
   *
@@ -1059,20 +1058,24 @@ static void DMA_CalcDMAMUXChannelBaseAndMask(DMA_HandleTypeDef *hdma)
   {
     /* DMA1 */
     DMAMUX1_ChannelBase = DMAMUX1_Channel0;
+    channel_number = (((uint32_t)hdma->Instance & 0xFFU) - 8U) / 20U;
   }
   else
   {
     /* DMA2 */
 #if defined (STM32G471xx) || defined (STM32G473xx) || defined (STM32G474xx) || defined (STM32G414xx) || defined (STM32G483xx) || defined (STM32G484xx) || defined (STM32G491xx) || defined (STM32G4A1xx) || defined (STM32G411xC)
     DMAMUX1_ChannelBase = DMAMUX1_Channel8;
+    channel_number = ((((uint32_t)hdma->Instance & 0xFFU) - 8U) / 20U) + 8U;
 #elif defined (STM32G411xB) || defined (STM32G431xx) || defined (STM32G441xx) || defined (STM32GBK1CB)
     DMAMUX1_ChannelBase = DMAMUX1_Channel6;
+    channel_number = ((((uint32_t)hdma->Instance & 0xFFU) - 8U) / 20U) + 6U;
 #else
     DMAMUX1_ChannelBase = DMAMUX1_Channel7;
+    channel_number = ((((uint32_t)hdma->Instance & 0xFFU) - 8U) / 20U) + 7U;
 #endif /* STM32G4x1xx) */
   }
+
   dmamux_base_addr = (uint32_t)DMAMUX1_ChannelBase;
-  channel_number = (((uint32_t)hdma->Instance & 0xFFU) - 8U) / 20U;
   hdma->DMAmuxChannel = (DMAMUX_Channel_TypeDef *)(uint32_t)(dmamux_base_addr + ((hdma->ChannelIndex >> 2U) * ((uint32_t)DMAMUX1_Channel1 - (uint32_t)DMAMUX1_Channel0)));
   hdma->DMAmuxChannelStatus = DMAMUX1_ChannelStatus;
   hdma->DMAmuxChannelStatusMask = 1UL << (channel_number & 0x1FU);
