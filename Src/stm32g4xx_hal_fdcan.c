@@ -2024,18 +2024,21 @@ HAL_StatusTypeDef HAL_FDCAN_Start(FDCAN_HandleTypeDef *hfdcan)
   */
 HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan)
 {
-  uint32_t Counter = 0U;
+  uint32_t tickstart;
 
   if (hfdcan->State == HAL_FDCAN_STATE_BUSY)
   {
     /* Request initialisation */
     SET_BIT(hfdcan->Instance->CCCR, FDCAN_CCCR_INIT);
 
+    /* Get tick */
+    tickstart = HAL_GetTick();
+
     /* Wait until the INIT bit into CCCR register is set */
     while ((hfdcan->Instance->CCCR & FDCAN_CCCR_INIT) == 0U)
     {
       /* Check for the Timeout */
-      if (Counter > FDCAN_TIMEOUT_VALUE)
+      if ((HAL_GetTick() - tickstart) > FDCAN_TIMEOUT_VALUE)
       {
         /* Update error code */
         hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
@@ -2045,22 +2048,19 @@ HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan)
 
         return HAL_ERROR;
       }
-
-      /* Increment counter */
-      Counter++;
     }
-
-    /* Reset counter */
-    Counter = 0U;
 
     /* Exit from Sleep mode */
     CLEAR_BIT(hfdcan->Instance->CCCR, FDCAN_CCCR_CSR);
+
+    /* Get tick */
+    tickstart = HAL_GetTick();
 
     /* Wait until FDCAN exits sleep mode */
     while ((hfdcan->Instance->CCCR & FDCAN_CCCR_CSA) == FDCAN_CCCR_CSA)
     {
       /* Check for the Timeout */
-      if (Counter > FDCAN_TIMEOUT_VALUE)
+      if ((HAL_GetTick() - tickstart) > FDCAN_TIMEOUT_VALUE)
       {
         /* Update error code */
         hfdcan->ErrorCode |= HAL_FDCAN_ERROR_TIMEOUT;
@@ -2070,9 +2070,6 @@ HAL_StatusTypeDef HAL_FDCAN_Stop(FDCAN_HandleTypeDef *hfdcan)
 
         return HAL_ERROR;
       }
-
-      /* Increment counter */
-      Counter++;
     }
 
     /* Enable configuration change */
@@ -2224,7 +2221,7 @@ HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t R
   uint32_t *RxAddress;
   uint8_t  *pData;
   uint32_t ByteCounter;
-  uint32_t GetIndex = 0;
+  uint32_t GetIndex;
   HAL_FDCAN_StateTypeDef state = hfdcan->State;
 
   /* Check function parameters */

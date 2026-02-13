@@ -159,7 +159,7 @@
   *         the configuration information for the specified GPIO peripheral.
   * @retval None
   */
-void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
+void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef const *GPIO_Init)
 {
   uint32_t position = 0x00U;
   uint32_t iocurrent;
@@ -371,7 +371,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin)
   *         This parameter can be any combination of GPIO_PIN_x where x can be (0..15).
   * @retval The input port pin value.
   */
-GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef const *GPIOx, uint16_t GPIO_Pin)
 {
   GPIO_PinState bitstatus;
 

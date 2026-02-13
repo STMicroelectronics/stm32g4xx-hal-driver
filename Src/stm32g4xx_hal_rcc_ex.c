@@ -120,7 +120,7 @@
   *
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClkInit)
+HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef const *PeriphClkInit)
 {
   uint32_t tmpregister;
   uint32_t tickstart;
@@ -1558,7 +1558,7 @@ void HAL_RCCEx_DisableLSCO(void)
   * @param  pInit Pointer on RCC_CRSInitTypeDef structure
   * @retval None
   */
-void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef *pInit)
+void HAL_RCCEx_CRSConfig(RCC_CRSInitTypeDef const *pInit)
 {
   uint32_t value;
 

@@ -1555,7 +1555,7 @@ HAL_StatusTypeDef HAL_QSPI_Receive_DMA(QSPI_HandleTypeDef *hqspi, uint8_t *pData
   * @note   This function is used only in Automatic Polling Mode
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef *cfg, uint32_t Timeout)
+HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef const *cfg, uint32_t Timeout)
 {
   HAL_StatusTypeDef status;
   uint32_t tickstart = HAL_GetTick();
@@ -1655,7 +1655,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling(QSPI_HandleTypeDef *hqspi, QSPI_CommandTy
   * @note   This function is used only in Automatic Polling Mode
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef *cfg)
+HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_AutoPollingTypeDef const *cfg)
 {
   HAL_StatusTypeDef status;
   uint32_t tickstart = HAL_GetTick();
@@ -1759,7 +1759,7 @@ HAL_StatusTypeDef HAL_QSPI_AutoPolling_IT(QSPI_HandleTypeDef *hqspi, QSPI_Comman
   * @note   This function is used only in Memory mapped Mode
   * @retval HAL status
   */
-HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_MemoryMappedTypeDef *cfg)
+HAL_StatusTypeDef HAL_QSPI_MemoryMapped(QSPI_HandleTypeDef *hqspi, QSPI_CommandTypeDef *cmd, QSPI_MemoryMappedTypeDef const *cfg)
 {
   HAL_StatusTypeDef status;
   uint32_t tickstart = HAL_GetTick();
